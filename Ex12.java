@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class Ex12 {
 
 	public static void main(String[] args) {
-		// ¸¶¹æÁø - È¦¼ö magic square 2ÀÚ¸®±îÁö¸¸ ÀÔ·ÂÇØÁà....
+		// ë§ˆë°©ì§„ - í™€ìˆ˜ magic square 2ìë¦¬ê¹Œì§€ë§Œ ì…ë ¥í•´ì¤˜....
 		Scanner sc = new Scanner(System.in);
-		System.out.print("È¦¼ö ÀÔ·Â(ºÎÅ¹ÀÎµ¥ 2ÀÚ¸® ±îÁö¸¸ ÀÔ·ÂÇØÁà.....) : ");
+		System.out.print("í™€ìˆ˜ ì…ë ¥(ë¶€íƒì¸ë° 2ìë¦¬ ê¹Œì§€ë§Œ ì…ë ¥í•´ì¤˜.....) : ");
 		int odd = sc.nextInt();
-		// ¹è¿­ »ı¼º ¹× ÀÓ½Ã°ª ÁöÁ¤
+		// ë°°ì—´ ìƒì„± ë° ì„ì‹œê°’ ì§€ì •
 		int[][] ms = new int[odd + 2][odd + 2];
 		for (int a = 0; a < odd + 2; a++) {
 			for (int b = 0; b < odd + 2; b++) {
@@ -18,7 +18,7 @@ public class Ex12 {
 				}
 			}
 		}
-		// ¸¶¹æÁø ÀÛ¼º
+		// ë§ˆë°©ì§„ ì‘ì„±
 		int i = 1, j = (odd + 1) / 2, n = 1;
 		while (i >= 1 && i <= odd && j >= 1 && j <= odd) {
 			ms[i][j] = n;
@@ -49,7 +49,7 @@ public class Ex12 {
 				break;
 			}
 		}
-		// ¸¶¹æÁø Ãâ·Â
+		// ë§ˆë°©ì§„ ì¶œë ¥ : ìë¦¬ìˆ˜ê°€ ë‹¤ë¥´ë©´ ì—´ì´ ì•ˆ ë§ëŠ”ê²Œ ì‹«ì–´ì„œ if ë¡œ êµ¬ë¶„í•´ì£¼ë‹¤ê°€ ê¸¸ì–´ì§............
 		if (n - 1 >= 1000) {
 			for (int a = 1; a < odd + 1; a++) {
 				for (int b = 1; b < odd + 1; b++) {
@@ -98,24 +98,24 @@ public class Ex12 {
 			}
 		}
 
-		// °Ë»ê : Ãâ·Â°ªÀÌ ¸¶¹æÁøÀÌ ¸Â´ÂÁö Ã¼Å©ÇØÁÖ´Â ºÎºĞ
-		// ÇàÀÇ ÇÕ
+		// ê²€ì‚° : ì¶œë ¥ê°’ì´ ë§ˆë°©ì§„ì´ ë§ëŠ”ì§€ ì²´í¬í•´ì£¼ëŠ” ë¶€ë¶„
+		// í–‰ì˜ í•©
 		for (int a = 1; a <= odd; a++) {
 			int sum = 0;
 			for (int b = 1; b <= odd; b++) {
 				sum += ms[a][b];
 			}
-			System.out.printf("Çà%dÀÇ ÇÕ : %d\n", a, sum);
+			System.out.printf("í–‰%dì˜ í•© : %d\n", a, sum);
 		}
-		// ¿­ÀÇ ÇÕ
+		// ì—´ì˜ í•©
 		for (int b = 1; b <= odd; b++) {
 			int sum = 0;
 			for (int a = 1; a <= odd; a++) {
 				sum += ms[a][b];
 			}
-			System.out.printf("¿­%dÀÇ ÇÕ : %d\n", b, sum);
+			System.out.printf("ì—´%dì˜ í•© : %d\n", b, sum);
 		}
-		// ´ë°¢¼±ÀÇ ÇÕ 1
+		// ëŒ€ê°ì„ ì˜ í•© 1
 		int sum1 = 0;
 		for (int b = 1; b <= odd; b++) {
 			for (int a = 1; a <= odd; a++) {
@@ -124,8 +124,8 @@ public class Ex12 {
 				}
 			}
 		}
-		System.out.println("´ë°¢¼±1ÀÇ ÇÕ : " + sum1);
-		// ´ë°¢¼±ÀÇ ÇÕ2
+		System.out.println("ëŒ€ê°ì„ 1ì˜ í•© : " + sum1);
+		// ëŒ€ê°ì„ ì˜ í•©2
 		int sum2 = 0;
 		for (int b = 1; b <= odd; b++) {
 			for (int a = 1; a <= odd; a++) {
@@ -134,7 +134,7 @@ public class Ex12 {
 				}
 			}
 		}
-		System.out.println("´ë°¢¼±1ÀÇ ÇÕ : " + sum2);
+		System.out.println("ëŒ€ê°ì„ 1ì˜ í•© : " + sum2);
 	}
 
 }
