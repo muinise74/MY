@@ -3,9 +3,9 @@ import java.util.Random;
 public class Ex15 {
 
 	public static void main(String[] args) {
-		// 3¿ø 1Â÷ ¿¬¸³¹æÁ¤½Ä °è¼ö - 20 ~ 20 ½Ç·ÂÀÇ ÇÑ°è·Î ÇØ´Â ÇÏ³ª¸¸ ±¸ÇÏ°Ú½À´Ï´Ù. ¹Ì¾È....
+		// 3ì› 1ì°¨ ì—°ë¦½ë°©ì •ì‹ ê³„ìˆ˜ - 10 ~ 10 ì‹¤ë ¥ì˜ í•œê³„ë¡œ í•´ëŠ” í•˜ë‚˜ë§Œ êµ¬í•˜ê² ìŠµë‹ˆë‹¤. ë¯¸ì•ˆ....
 		
-		// 1. ¹æÁ¤½Ä »ı¼Í
+		// 1. ë°©ì •ì‹ ìƒì…©
 		Random rd = new Random();
 		int[][] matrix = new int[3][3];
 		for (int i = 0; i < matrix.length; i++) {
@@ -17,12 +17,12 @@ public class Ex15 {
 		for (int i = 0; i < ans.length; i++) {
 			ans[i] = rd.nextInt(21) - 10;
 		}
-		// 2. ¹æÁ¤½Ä Ãâ·Â
-		System.out.println("´ÙÀ½ 3¿ø 1Â÷ ¿¬¸³¹æÁ¤½ÄÀ» ÇØ°á ÇÏ¶ó!!!");
+		// 2. ë°©ì •ì‹ ì¶œë ¥
+		System.out.println("ë‹¤ìŒ 3ì› 1ì°¨ ì—°ë¦½ë°©ì •ì‹ì„ í•´ê²° í•˜ë¼!!!");
 		for (int i = 0; i < matrix.length; i++) {
 			System.out.printf("%2dx + %2dy + %2dz = %2d\n",matrix[i][0],matrix[i][1],matrix[i][2],ans[i]);
 		}
-		// 3. ¹æÁ¤½Ä Ç®±â 1
+		// 3. ë°©ì •ì‹ í’€ê¸° 1
 		for (int i = 1; i < matrix.length; i++) {
 			int temp = matrix[i][0];
 			for (int j = 0; j < matrix[0].length; j++) {
@@ -30,23 +30,23 @@ public class Ex15 {
 			}
 			ans[i] = matrix[0][0]*ans[i]-ans[0]*temp; 
 		}
-		// 4. Áß°£ Á¡°Ë 1
+		// 4. ì¤‘ê°„ ì ê²€ 1
 		System.out.println("");
 		for (int i = 0; i < matrix.length; i++) {
 			System.out.printf("%2dx + %2dy + %2dz = %2d\n",matrix[i][0],matrix[i][1],matrix[i][2],ans[i]);
 		}
-		// 5. ¹æÁ¤½Ä Ç®±â 2
+		// 5. ë°©ì •ì‹ í’€ê¸° 2
 		int temp2 = matrix[2][1];
 		for (int j = 1; j < matrix.length; j++) {
 			matrix [2][j] = matrix[1][1]*matrix[2][j] - matrix[1][j]*temp2;
 		}
 		ans[2] = matrix[1][1]*ans[2]-ans[1]*temp2;
-		// 6. Áß°£ Á¡°Ë 2
+		// 6. ì¤‘ê°„ ì ê²€ 2
 				System.out.println("");
 				for (int i = 0; i < matrix.length; i++) {
 					System.out.printf("%2dx + %2dy + %2dz = %2d\n",matrix[i][0],matrix[i][1],matrix[i][2],ans[i]);
 				}
-		// 7. ÇØ ±¸ÇÏ±â
+		// 7. í•´ êµ¬í•˜ê¸°
 		double x;
 		double y;
 		double z;
@@ -56,7 +56,7 @@ public class Ex15 {
 			} else if (matrix[2][2] == 0 && ans[2] == 0) {
 				z = 1;
 			} else {
-				System.out.println("ÇØ°¡ ¾ø½À´Ï´Ù.");
+				System.out.println("í•´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 				break;
 			}
 			if (matrix[1][1] != 0) {
@@ -64,7 +64,7 @@ public class Ex15 {
 			} else if (matrix[1][1] == 0 && ans[1] - matrix[1][2]*z == 0) {
 				y = 1;
 			} else { 
-				System.out.println("ÇØ°¡ ¾ø½À´Ï´Ù.");
+				System.out.println("í•´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 				break;
 			}
 			if (matrix[0][0] != 0) {
@@ -72,10 +72,10 @@ public class Ex15 {
 			} else if (matrix[0][0] == 0 && ans[0]-matrix[0][1]*y-matrix[0][2]*z == 0) {
 				x = 1;
 			} else {
-				System.out.println("ÇØ°¡ ¾ø½À´Ï´Ù.");
+				System.out.println("í•´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 				break;
 			}
-			System.out.printf("À§ ¹æÁ¤½ÄÀÌ ÇØ´Â (%f, %f, %f)ÀÔ´Ï´Ù.",x,y,z);
+			System.out.printf("ìœ„ ë°©ì •ì‹ì´ í•´ëŠ” (%f, %f, %f)ì…ë‹ˆë‹¤.",x,y,z);
 			break;
 		}
 	}
