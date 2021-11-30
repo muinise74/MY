@@ -16,8 +16,8 @@ public class Hw3_01 {
 	
 		int num1 = 10, num2 = 2, num3 = 3;
 		
-		System.out.println("°á°ú È®ÀÎ : " + isDivide(num1,num2));
-		System.out.println("°á°ú È®ÀÎ : " + isDivide(num1,num3));
+		System.out.println("ê²°ê³¼ í™•ì¸ : " + isDivide(num1,num2));
+		System.out.println("ê²°ê³¼  : " + isDivide(num1,num3));
 	}
 
 }
