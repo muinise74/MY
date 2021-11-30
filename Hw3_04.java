@@ -9,7 +9,7 @@ public class Hw3_04 {
 				result += " " + (i+1);
 			}
 		}
-		result = "±è¼­¹æÀº" + result +"¿¡ ÀÖ´Ù.";
+		result = "ê¹€ì„œë°©ì€" + result +"ì— ìˆë‹¤.";
 		return result;
 	}
 	public static void main(String[] args) {
