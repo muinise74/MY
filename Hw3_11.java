@@ -14,9 +14,9 @@ public class Hw3_11 {
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Á¤¼ö ÀÔ·Â : ");
+		System.out.print("ì •ìˆ˜ ìž…ë ¥ : ");
 		int num = sc.nextInt();
-		System.out.println("°á°ú : " + isHarshad(num));
+		System.out.println(" : " + isHarshad(num));
 		sc.close();
 	}
 
