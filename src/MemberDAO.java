@@ -163,8 +163,9 @@ public class MemberDAO {
 		}
 	}
 	// 회원 정보 열람
-	public void describe() {
-
+	public ArrayList<MemberDTO> describe() {
+		
+		ArrayList<MemberDTO> memberList = new ArrayList<MemberDTO>();
 		try {
 			getConnection();
 			// 3. SQL문 작성 및 실행
@@ -172,7 +173,8 @@ public class MemberDAO {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				System.out.println("ID : " + rs.getString("id") + " NickName : " + rs.getString("nickName"));
+				MemberDTO member = new MemberDTO(rs.getString("id"),rs.getString("pw"),rs.getString("nickName"));
+				memberList.add(member);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -180,6 +182,7 @@ public class MemberDAO {
 		} finally {
 			close();
 		}
+		return memberList;
 	}
 	// 회원 탈퇴
 	public void secession(String id, String pw) {
