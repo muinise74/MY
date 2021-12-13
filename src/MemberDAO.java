@@ -6,320 +6,207 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MemberDAO {
-	
+
 	Scanner sc = new Scanner(System.in);
-	// ·Î±×ÀÎ ±â´É
-	public void login(String id, String pw) {
-	
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
+
+	private Connection conn;
+	private PreparedStatement psmt;
+	private PreparedStatement psmt2;
+	private ResultSet rs;
+	// ë“œë¦¬ì´ë²„ ë¡œë”© ë° ì»¤ë„¥ì…˜ ê°œì²´ë¥¼ ê°€ì ¸ì˜¤ëŠ” ë©”ì†Œë“œ
+	private void getConnection() {
 		try {
 			// JDBC
-			// 0. JDBC¸¦ »ç¿ëÇÏ´Â PROJECT¿¡ µå¶óÀÌ¹ö ³Ö±â....
-			// 1. µå¶óÀÌ¹ö ·Îµù - ³»°¡ »ç¿ëÇÏ´Â DBMSÀÇ µå¶óÀÌ¹ö ·Îµù
+			// 0. JDBCë¥¼ ì‚¬ìš©í•˜ëŠ” PROJECTì— ë“œë¼ì´ë²„ ë„£ê¸°....
+			// 1. ë“œë¼ì´ë²„ ë¡œë”© - ë‚´ê°€ ì‚¬ìš©í•˜ëŠ” DBMSì˜ ë“œë¼ì´ë²„ ë¡œë”©
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			// 2. Connection ¿¬°á - ID,PW,DBÁÖ¼Ò ù±
+			// 2. Connection ì—°ê²° - ID,PW,DBì£¼ì†Œ å¿…
 			String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
 			String db_id = "hr";
 			String db_pw = "hr";
 			conn = DriverManager.getConnection(db_url, db_id, db_pw);
-			
-			// 3. SQL¹® ÀÛ¼º ¹× ½ÇÇà
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	// Javaì™€ Databaseì‚¬ì´ì˜ ì—°ê²° í•´ì œ
+	private void close() {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (psmt2 != null) {
+				psmt.close();
+			}
+			if (psmt != null) {
+				psmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	// ë¡œê·¸ì¸ ê¸°ëŠ¥
+	public void login(String id, String pw) {
+
+		try {
+			getConnection();
+			// 3. SQLë¬¸ ì‘ì„± ë° ì‹¤í–‰
 			String sql = "SELECT * FROM bigmember WHERE ID = ? AND PW = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,id);
-			psmt.setString(2,pw);
+			psmt.setString(1, id);
+			psmt.setString(2, pw);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				System.out.println("·Î±×ÀÎ ¼º°ø");
-				System.out.println(rs.getString("nickName")+"´Ô È¯¿µÇÕ´Ï´Ù.");
+				System.out.println("ë¡œê·¸ì¸ ì„±ê³µ");
+				System.out.println(rs.getString("nickName") + "ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.");
 			} else {
-				System.out.println("·Î±×ÀÎ ½ÇÆĞ");
+				System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨");
 			}
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// Java¿Í Database»çÀÌÀÇ ¿¬°á ÇØÁ¦
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			close();
 		}
 	}
-	
+	// íšŒì›ê°€ì…
 	public void join(String id, String pw, String nickName) {
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		
+
 		try {
-			// JDBC
-			// 0. JDBC¸¦ »ç¿ëÇÏ´Â PROJECT¿¡ µå¶óÀÌ¹ö ³Ö±â....
-			// 1. µå¶óÀÌ¹ö ·Îµù - ³»°¡ »ç¿ëÇÏ´Â DBMSÀÇ µå¶óÀÌ¹ö ·Îµù
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			// 2. Connection ¿¬°á - ID,PW,DBÁÖ¼Ò ù±
-			String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String db_id = "hr";
-			String db_pw = "hr";
-			conn = DriverManager.getConnection(db_url, db_id, db_pw);
-			
-			// 3. SQL¹® ÀÛ¼º ¹× ½ÇÇà
+			getConnection();
+			// 3. SQLë¬¸ ì‘ì„± ë° ì‹¤í–‰
 			String sql = "Insert into bigmember values(?,?,?)";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,id);
-			psmt.setString(2,pw);
-			psmt.setString(3,nickName);
+			psmt.setString(1, id);
+			psmt.setString(2, pw);
+			psmt.setString(3, nickName);
 			int cnt = psmt.executeUpdate();
 			if (cnt > 0) {
-				System.out.println("·Î±×ÀÎ ¼º°ø");
+				System.out.println("ë¡œê·¸ì¸ ì„±ê³µ");
 			} else {
-				System.out.println("·Î±×ÀÎ ½ÇÆĞ");
+				System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨");
 			}
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// Java¿Í Database»çÀÌÀÇ ¿¬°á ÇØÁ¦
-			try {
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			close();
 		}
 	}
-	
+	// íšŒì›ì •ë³´ ìˆ˜ì •
 	public void update(String id) {
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		PreparedStatement psmt2 = null;
-		ResultSet rs = null;
-		
+
 		try {
-			// JDBC
-			// 0. JDBC¸¦ »ç¿ëÇÏ´Â PROJECT¿¡ µå¶óÀÌ¹ö ³Ö±â....
-			// 1. µå¶óÀÌ¹ö ·Îµù - ³»°¡ »ç¿ëÇÏ´Â DBMSÀÇ µå¶óÀÌ¹ö ·Îµù
 			String pw;
 			String nickName;
-			
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			// 2. Connection ¿¬°á - ID,PW,DBÁÖ¼Ò ù±
-			String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String db_id = "hr";
-			String db_pw = "hr";
-			conn = DriverManager.getConnection(db_url, db_id, db_pw);
-			
+
+			getConnection();
+
 			String sql = "SELECT * FROM bigmember WHERE ID = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,id);
+			psmt.setString(1, id);
 			rs = psmt.executeQuery();
-			
+
 			if (rs.next()) {
 				pw = rs.getString("pw");
 				nickName = rs.getString("nickName");
-				System.out.println("ºñ¹Ğ¹øÈ£ ¶Ç´Â ´Ğ³×ÀÓÀ» º¯°æÇÏ½Ã°Ú½À´Ï±î?");
-				System.out.print("[1. ºñ¹Ğ¹øÈ£ º¯°æ 2. ´Ğ³×ÀÓ º¯°æ 3. µÑ´Ù º¯°æ] ");
+				System.out.println("ë¹„ë°€ë²ˆí˜¸ ë˜ëŠ” ë‹‰ë„¤ì„ì„ ë³€ê²½í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
+				System.out.print("[1. ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ 2. ë‹‰ë„¤ì„ ë³€ê²½ 3. ë‘˜ë‹¤ ë³€ê²½] ");
 				int num = sc.nextInt();
 				if (num == 1) {
-					System.out.print("º¯°æÇÒ ºñ¹Ğ¹øÈ£ ÀÔ·Â : ");
+					System.out.print("ë³€ê²½í•  ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ : ");
 					pw = sc.next();
-				} else if(num==2) {
-					System.out.println("º¯°æÇÒ ´Ğ³×ÀÓ ÀÔ·Â : ");
+				} else if (num == 2) {
+					System.out.println("ë³€ê²½í•  ë‹‰ë„¤ì„ ì…ë ¥ : ");
 					nickName = sc.next();
-				} else if(num==3) {
-					System.out.print("º¯°æÇÒ ºñ¹Ğ¹øÈ£ ÀÔ·Â : ");
+				} else if (num == 3) {
+					System.out.print("ë³€ê²½í•  ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ : ");
 					pw = sc.next();
-					System.out.print("º¯°æÇÒ ´Ğ³×ÀÓ ÀÔ·Â : ");
+					System.out.print("ë³€ê²½í•  ë‹‰ë„¤ì„ ì…ë ¥ : ");
 					nickName = sc.next();
-				} 
-				
-				// 3. SQL¹® ÀÛ¼º ¹× ½ÇÇà
+				}
+
+				// 3. SQLë¬¸ ì‘ì„± ë° ì‹¤í–‰
 				int cnt = 0;
 				if (num <= 3) {
 					sql = "Update bigmember SET PW = ?, NICKNAME = ? Where ID = ?";
 					psmt2 = conn.prepareStatement(sql);
-					psmt2.setString(1,pw);
+					psmt2.setString(1, pw);
 					System.out.println(pw);
-					psmt2.setString(2,nickName);
-					psmt2.setString(3,id);
+					psmt2.setString(2, nickName);
+					psmt2.setString(3, id);
 					System.out.println(nickName);
 					cnt = psmt2.executeUpdate();
 				}
 				if (cnt > 0) {
-					System.out.println("¼öÁ¤ ¼º°ø");
+					System.out.println("ìˆ˜ì • ì„±ê³µ");
 				} else {
-					System.out.println("¼öÁ¤ ½ÇÆĞ");
+					System.out.println("ìˆ˜ì • ì‹¤íŒ¨");
 				}
-				
+
 			} else {
-				System.out.println("´Ù½Ã ½ÃÀÛÇØÁÖ¼¼¿ä...");
+				System.out.println("ë‹¤ì‹œ ì‹œì‘í•´ì£¼ì„¸ìš”...");
 			}
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// Java¿Í Database»çÀÌÀÇ ¿¬°á ÇØÁ¦
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if (psmt2 != null) {
-					psmt2.close();
-				}
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			close();
 		}
 	}
-
+	// íšŒì› ì •ë³´ ì—´ëŒ
 	public void describe() {
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
+
 		try {
-			// JDBC
-			// 0. JDBC¸¦ »ç¿ëÇÏ´Â PROJECT¿¡ µå¶óÀÌ¹ö ³Ö±â....
-			// 1. µå¶óÀÌ¹ö ·Îµù - ³»°¡ »ç¿ëÇÏ´Â DBMSÀÇ µå¶óÀÌ¹ö ·Îµù
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			// 2. Connection ¿¬°á - ID,PW,DBÁÖ¼Ò ù±
-			String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String db_id = "hr";
-			String db_pw = "hr";
-			conn = DriverManager.getConnection(db_url, db_id, db_pw);
-			
-			// 3. SQL¹® ÀÛ¼º ¹× ½ÇÇà
+			getConnection();
+			// 3. SQLë¬¸ ì‘ì„± ë° ì‹¤í–‰
 			String sql = "SELECT * FROM bigmember";
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				System.out.println("ID : " + rs.getString("id") +" NickName : "+rs.getString("nickName"));
+				System.out.println("ID : " + rs.getString("id") + " NickName : " + rs.getString("nickName"));
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// Java¿Í Database»çÀÌÀÇ ¿¬°á ÇØÁ¦
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			close();
 		}
 	}
-	
+	// íšŒì› íƒˆí‡´
 	public void secession(String id, String pw) {
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		PreparedStatement psmt2 = null;
-		ResultSet rs = null;
-		
+
 		try {
-			// JDBC
-			// 0. JDBC¸¦ »ç¿ëÇÏ´Â PROJECT¿¡ µå¶óÀÌ¹ö ³Ö±â....
-			// 1. µå¶óÀÌ¹ö ·Îµù - ³»°¡ »ç¿ëÇÏ´Â DBMSÀÇ µå¶óÀÌ¹ö ·Îµù
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			
-			// 2. Connection ¿¬°á - ID,PW,DBÁÖ¼Ò ù±
-			String db_url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String db_id = "hr";
-			String db_pw = "hr";
-			conn = DriverManager.getConnection(db_url, db_id, db_pw);
-			
-			// 3. SQL¹® ÀÛ¼º ¹× ½ÇÇà
+			getConnection();
+			// 3. SQLë¬¸ ì‘ì„± ë° ì‹¤í–‰
 			String sql = "DELETE FROM bigmember WHERE ID = ? AND PW = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,id);
-			psmt.setString(2,pw);
+			psmt.setString(1, id);
+			psmt.setString(2, pw);
 			rs = psmt.executeQuery();
-			
+
 			sql = "SELECT * FROM bigmember WHERE ID = ?";
 			psmt2 = conn.prepareStatement(sql);
-			psmt2.setString(1,id);
+			psmt2.setString(1, id);
 			rs = psmt2.executeQuery();
 			if (rs.next()) {
-				System.out.println("Å»Åğ ½ÇÆĞ");
+				System.out.println("íƒˆí‡´ ì‹¤íŒ¨");
 			} else {
-				System.out.println("Å»Åğ ¼º°ø");
+				System.out.println("íƒˆí‡´ ì„±ê³µ");
 			}
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// Java¿Í Database»çÀÌÀÇ ¿¬°á ÇØÁ¦
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (psmt2 != null) {
-					psmt.close();
-				}
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			close();
 		}
 	}
 }
