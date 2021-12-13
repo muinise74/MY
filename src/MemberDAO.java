@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MemberDAO {
@@ -13,6 +14,7 @@ public class MemberDAO {
 	private PreparedStatement psmt;
 	private PreparedStatement psmt2;
 	private ResultSet rs;
+
 	// 드리이버 로딩 및 커넥션 개체를 가져오는 메소드
 	private void getConnection() {
 		try {
@@ -33,6 +35,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
+
 	// Java와 Database사이의 연결 해제
 	private void close() {
 		try {
@@ -53,9 +56,11 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	// 로그인 기능
-	public void login(String id, String pw) {
 
+	// 로그인 기능
+	public String login(String id, String pw) {
+
+		String check = null;
 		try {
 			getConnection();
 			// 3. SQL문 작성 및 실행
@@ -65,10 +70,8 @@ public class MemberDAO {
 			psmt.setString(2, pw);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				System.out.println("로그인 성공");
-				System.out.println(rs.getString("nickName") + "님 환영합니다.");
+				check = rs.getString("nickName");
 			} else {
-				System.out.println("로그인 실패");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -76,10 +79,12 @@ public class MemberDAO {
 		} finally {
 			close();
 		}
+		return check;
 	}
-	// 회원가입
-	public void join(String id, String pw, String nickName) {
 
+	// 회원가입
+	public int join(String id, String pw, String nickName) {
+		int cnt = 0;
 		try {
 			getConnection();
 			// 3. SQL문 작성 및 실행
@@ -88,22 +93,19 @@ public class MemberDAO {
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
 			psmt.setString(3, nickName);
-			int cnt = psmt.executeUpdate();
-			if (cnt > 0) {
-				System.out.println("로그인 성공");
-			} else {
-				System.out.println("로그인 실패");
-			}
+			cnt = psmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close();
 		}
+		return cnt;
 	}
-	// 회원정보 수정
-	public void update(String id) {
 
+	// 회원정보 수정
+	public int update(String id) {
+		int cnt = 0;
 		try {
 			String pw;
 			String nickName;
@@ -135,25 +137,15 @@ public class MemberDAO {
 				}
 
 				// 3. SQL문 작성 및 실행
-				int cnt = 0;
 				if (num <= 3) {
 					sql = "Update bigmember SET PW = ?, NICKNAME = ? Where ID = ?";
 					psmt2 = conn.prepareStatement(sql);
 					psmt2.setString(1, pw);
-					System.out.println(pw);
 					psmt2.setString(2, nickName);
 					psmt2.setString(3, id);
-					System.out.println(nickName);
 					cnt = psmt2.executeUpdate();
 				}
-				if (cnt > 0) {
-					System.out.println("수정 성공");
-				} else {
-					System.out.println("수정 실패");
-				}
-
 			} else {
-				System.out.println("다시 시작해주세요...");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -161,10 +153,12 @@ public class MemberDAO {
 		} finally {
 			close();
 		}
+		return cnt;
 	}
+
 	// 회원 정보 열람
 	public ArrayList<MemberDTO> describe() {
-		
+
 		ArrayList<MemberDTO> memberList = new ArrayList<MemberDTO>();
 		try {
 			getConnection();
@@ -173,7 +167,7 @@ public class MemberDAO {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				MemberDTO member = new MemberDTO(rs.getString("id"),rs.getString("pw"),rs.getString("nickName"));
+				MemberDTO member = new MemberDTO(rs.getString("id"), rs.getString("pw"), rs.getString("nickName"));
 				memberList.add(member);
 			}
 		} catch (SQLException e) {
@@ -184,9 +178,10 @@ public class MemberDAO {
 		}
 		return memberList;
 	}
-	// 회원 탈퇴
-	public void secession(String id, String pw) {
 
+	// 회원 탈퇴
+	public int secession(String id, String pw) {
+		int cnt = 0;
 		try {
 			getConnection();
 			// 3. SQL문 작성 및 실행
@@ -194,22 +189,13 @@ public class MemberDAO {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
-			rs = psmt.executeQuery();
-
-			sql = "SELECT * FROM bigmember WHERE ID = ?";
-			psmt2 = conn.prepareStatement(sql);
-			psmt2.setString(1, id);
-			rs = psmt2.executeQuery();
-			if (rs.next()) {
-				System.out.println("탈퇴 실패");
-			} else {
-				System.out.println("탈퇴 성공");
-			}
+			cnt = psmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close();
 		}
+		return cnt;
 	}
 }
