@@ -1,54 +1,76 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		// 1. ·Î±×ÀÎ 2. È¸¿ø°¡ÀÔ 3. È¸¿ø¸ñ·Ïº¸±â 4. È¸¿øÁ¤º¸¼öÁ¤ 5. È¸¿øÅ»Åğ 6. Á¾·á
+		// 1. ë¡œê·¸ì¸ 2. íšŒì›ê°€ì… 3. íšŒì›ëª©ë¡ë³´ê¸° 4. íšŒì›ì •ë³´ìˆ˜ì • 5. íšŒì›íƒˆí‡´ 6. ì¢…ë£Œ
 		Scanner sc = new Scanner(System.in);
 		MemberDAO memberDAO = new MemberDAO();
-		System.out.println("=====È¸¿ø °ü¸® ½Ã½ºÅÛ=====");
+		System.out.println("=====íšŒì› ê´€ë¦¬ ì‹œìŠ¤í…œ=====");
 		
 		while (true) {
-			System.out.print("[1. ·Î±×ÀÎ 2. È¸¿ø°¡ÀÔ 3. È¸¿ø¸ñ·Ïº¸±â 4. È¸¿øÁ¤º¸¼öÁ¤ 5. È¸¿øÅ»Åğ 6. Á¾·á] ");
+			System.out.print("[1. ë¡œê·¸ì¸ 2. íšŒì›ê°€ì… 3. íšŒì›ëª©ë¡ë³´ê¸° 4. íšŒì›ì •ë³´ìˆ˜ì • 5. íšŒì›íƒˆí‡´ 6. ì¢…ë£Œ] ");
 			int choice = sc.nextInt();
 			
 			if (choice == 1) {
 				System.out.println("====Log-In====");
-				System.out.print("ID ÀÔ·Â : ");
+				System.out.print("ID ì…ë ¥ : ");
 				String id = sc.next();
-				System.out.print("PassWord ÀÔ·Â : ");
+				System.out.print("PassWord ì…ë ¥ : ");
 				String pw = sc.next();
-				memberDAO.login(id,pw);
+				if (!memberDAO.login(id,pw).equals(null)) {
+					System.out.println("ë¡œê·¸ì¸ ì„±ê³µ");
+					System.out.println(memberDAO.login(id,pw) + "ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.");
+				} else {
+					System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨");
+				}
 			} else if (choice == 2) {
-				System.out.println("====È¸¿ø°¡ÀÔ====");
-				System.out.print("ID ÀÔ·Â : ");
+				System.out.println("====íšŒì›ê°€ì…====");
+				System.out.print("ID ì…ë ¥ : ");
 				String id = sc.next();
-				System.out.print("PassWord ÀÔ·Â : ");
+				System.out.print("PassWord ì…ë ¥ : ");
 				String pw = sc.next();
-				System.out.print("´Ğ³×ÀÓ ÀÔ·Â : ");
+				System.out.print("ë‹‰ë„¤ì„ ì…ë ¥ : ");
 				String nickName = sc.next();
-				memberDAO.join(id,pw,nickName);
+				if (memberDAO.join(id,pw,nickName) > 0) {
+					System.out.println("ë¡œê·¸ì¸ ì„±ê³µ");
+				} else {
+					System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨");
+				}
 			} else if (choice == 3) {
-				System.out.println("====È¸¿ø ¸ñ·Ï====");
-				memberDAO.describe();
+				System.out.println("====íšŒì› ëª©ë¡====");
+				ArrayList<MemberDTO> memberList = memberDAO.describe();
+				for (int i = 0; i < memberList.size();i++) {
+					memberList.get(i).show();
+				}
 			} else if (choice == 4) {
-				System.out.println("====È¸¿ø Á¤º¸ ¼öÁ¤====");
-				System.out.print("ID ÀÔ·Â : ");
+				System.out.println("====íšŒì› ì •ë³´ ìˆ˜ì •====");
+				System.out.print("ID ì…ë ¥ : ");
 				String id = sc.next();
-				memberDAO.update(id);
+				if (memberDAO.update(id) > 0) {
+					System.out.println("ìˆ˜ì • ì„±ê³µ");
+				} else {
+					System.out.println("ìˆ˜ì • ì‹¤íŒ¨");
+				}
+
 			} else if (choice == 5) {
-				System.out.println("====È¸¿ø Å»Åğ====");
-				System.out.print("ID ÀÔ·Â : ");
+				System.out.println("====íšŒì› íƒˆí‡´====");
+				System.out.print("ID ì…ë ¥ : ");
 				String id = sc.next();
-				System.out.print("PassWord ÀÔ·Â : ");
+				System.out.print("PassWord ì…ë ¥ : ");
 				String pw = sc.next();
-				memberDAO.secession(id, pw);
+				if (memberDAO.secession(id, pw) > 0) {
+					System.out.println("íƒˆí‡´ ì„±ê³µ");
+				} else {
+					System.out.println("íƒˆí‡´ ì‹¤íŒ¨");
+				}
 			} else if (choice == 6) {
-				System.out.println("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.");
+				System.out.println("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
 				break;
 			} else {
-				System.out.println("¸Ş´º¿¡ ÀÖ´Â ¼ö·Î ´Ù½Ã ÀÔ·ÂÇØ ÁÖ¼¼¿ä!!!!");
+				System.out.println("ë©”ë‰´ì— ìˆëŠ” ìˆ˜ë¡œ ë‹¤ì‹œ ì…ë ¥í•´ ì£¼ì„¸ìš”!!!!");
 			}
 		}
 		sc.close();
