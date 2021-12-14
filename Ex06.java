@@ -3,14 +3,14 @@ import java.util.Scanner;
 public class Ex06 {
 
 	public static void main(String[] args) {
-		// ¼ÕÀÍºĞ±âÁ¡ - ³ëÆ®ºÏ -
-		// ¿î¿µºñ : input1, 1´ë: »ı»ê ºñ¿ë : input2 ³ëÆ®ºÏ °¡°İ : input3 
+		
+		// ìš´ì˜ë¹„ : input1, 1ëŒ€: ìƒì‚° ë¹„ìš© : input2 ë…¸íŠ¸ë¶ ê°€ê²© : input3 
 		Scanner sc = new Scanner(System.in);
-		System.out.print("¿î¿µºñ : ");
+		System.out.print("ìš´ì˜ë¹„ : ");
 		long input1 = sc.nextInt();
-		System.out.print("1´ë »ı»êºñ : ");
+		System.out.print("1ëŒ€ ìƒì‚°ë¹„ : ");
 		long input2 = sc.nextInt();
-		System.out.print("°¡°İ : ");
+		System.out.print("ê°€ê²© : ");
 		long input3 = sc.nextInt();
 		
 		int cnt = 1;
@@ -20,7 +20,7 @@ public class Ex06 {
 			}else
 				cnt++;
 		}
-		System.out.println("¼ÕÀÍ ºĞ±âÁ¡ : "+cnt);
+		System.out.println("ì†ìµ ë¶„ê¸°ì  : "+cnt);
 		sc.close();
 	}
 
