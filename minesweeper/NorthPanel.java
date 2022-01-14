@@ -9,12 +9,12 @@ public class NorthPanel extends JPanel{
 		setLayout(new GridLayout(2,1));
 		setBackground(Color.BLACK);
 		
-		MineSweeper.info.setFont(new Font("∏º¿∫ ∞ÌµÒ",0,20));
+		MineSweeper.info.setFont(new Font("ÎßëÏùÄ Í≥†Îîï",0,20));
 		MineSweeper.info.setBackground(Color.BLACK);
 		MineSweeper.info.setForeground(Color.WHITE);
 		MineSweeper.info.setHorizontalAlignment(SwingConstants.RIGHT);
 
-		MineSweeper.label.setFont(new Font("∏º¿∫ ∞ÌµÒ",0,20));
+		MineSweeper.label.setFont(new Font("ÎßëÏùÄ Í≥†Îîï",0,20));
 		MineSweeper.label.setBackground(Color.BLACK);
 		MineSweeper.label.setForeground(Color.WHITE);
 		MineSweeper.label.setHorizontalAlignment(SwingConstants.RIGHT);
