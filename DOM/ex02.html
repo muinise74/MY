@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #shape {
+             height: 200px;
+             width: 200px;
+             background-color: cornflowerblue;
+         }
+    </style>
+</head>
+<body>
+    <div id ='shape'>
+    </div>
+    <button onclick = 'rectangle()'>rectangle</button>
+    <button onclick = 'circle()'>circle</button>
+    <button onclick = 'square()'>square</button>
+    
+    <script>
+        let div = document.getElementById("shape");
+
+        function rectangle(){
+            div.style.height='200px';
+            div.style.width='400px';
+            div.style.borderRadius='';
+            div.style.backgroundColor='coral';
+        };
+
+        function circle(){
+            div.style.height='200px';
+            div.style.width='200px';
+            div.style.borderRadius='50%'
+            div.style.backgroundColor='chocolate';
+        };
+
+        function square(){
+            div.style.height='200px';
+            div.style.width='200px';
+            div.style.borderRadius=''
+            div.style.backgroundColor='cornflowerblue';
+        };
+    </script>
+</body>
+</html>
