@@ -1,4 +1,4 @@
-package ¿¬½À8_MirrorSquare;
+package ì—°ìŠµ8_MirrorSquare;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,10 +7,12 @@ import java.util.Random;
 public class MirrorSquare extends JFrame implements Runnable{
 	
 	private Thread thread;
+	static JButton[] bts = new JButton[64];
 	Random rd = new Random();
 	
 	public MirrorSquare() {
 		setTitle("Oh, My Eye!!!!!!");
+		setLayout(new GridLayout(8,8,0,0));
 		setSize(360,365);
 		setResizable(true);
 		
@@ -23,15 +25,19 @@ public class MirrorSquare extends JFrame implements Runnable{
 	}
 	
 	public void run() {
+		for (int i = 0; i < bts.length; i++) {
+			bts[i] = new JButton();
+			bts[i].setEnabled(false);
+			add(bts[i]);
+		}
 		
-		JButton bt = new JButton("");
-		add(bt);
-		bt.setEnabled(false);
 		while(true) {
-			int r = rd.nextInt(256);
-			int g = rd.nextInt(256);
-			int b = rd.nextInt(256);
-			bt.setBackground(new Color(r,g,b));
+			for (int i = 0; i < bts.length; i++) {
+				int r = rd.nextInt(256);
+				int g = rd.nextInt(256);
+				int b = rd.nextInt(256);
+				bts[i].setBackground(new Color(r,g,b));
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
