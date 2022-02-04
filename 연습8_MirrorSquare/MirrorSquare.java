@@ -1,4 +1,4 @@
-package 연습8_MirrorSquare;
+ackage 연습8_MirrorSquare;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +33,7 @@ public class MirrorSquare extends JFrame implements Runnable{
 		
 		while(true) {
 			for (int i = 0; i < bts.length; i++) {
+				// 랜덤 색상 추출
 				int r = rd.nextInt(256);
 				int g = rd.nextInt(256);
 				int b = rd.nextInt(256);
