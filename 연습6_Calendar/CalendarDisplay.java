@@ -1,4 +1,4 @@
-package ����6_Calendar;
+package ¿¬½À6_Calendar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class CalendarDisplay extends JFrame{
 	static DatePanel dp = new DatePanel();
 	
 	public CalendarDisplay() {
-		
+		// 닐찌 화면
 		setTitle("Calendar");
 		Container c = getContentPane();
 		setSize(width,height);
