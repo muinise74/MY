@@ -20,7 +20,6 @@ public class AffineCipher {
 			list.add(A++);
 			list.add(a++);
 		}
-		Collections.shuffle(list);
 	}
 	
 	private int AlphabetToNum(char a) {
