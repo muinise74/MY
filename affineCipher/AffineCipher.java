@@ -1,10 +1,12 @@
 package affineCipher;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AffineCipher {
 	
-	private ArrayList<Character> list = new ArrayList<Character>();
+	private List<Character> list = new ArrayList<Character>();
 	private int key1 = 0;
 	private int key2 = 0;
 	
@@ -18,6 +20,7 @@ public class AffineCipher {
 			list.add(A++);
 			list.add(a++);
 		}
+		Collections.shuffle(list);
 	}
 	
 	private int AlphabetToNum(char a) {
