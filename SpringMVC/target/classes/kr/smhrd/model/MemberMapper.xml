@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.model.MemberMapper">
+    
+    <!-- 회원가입 -->
+	<insert id = 'joinInsert' parameterType="kr.smhrd.model.MemberVO">
+	    insert into tmember values(#{id},#{pw},#{nick},#{tel},#{address})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id = 'loginSelect' parameterType="kr.smhrd.model.MemberVO" resultType="kr.smhrd.model.MemberVO">
+	    select * from tmember where id = #{id} and pw = #{pw}
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id = 'memberUpdate' parameterType="kr.smhrd.model.MemberVO">
+	    update tmember set nick = #{nick}, tel = #{tel}, address = #{address} where id = #{id} and pw = #{pw}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id = 'memberDelete' parameterType="kr.smhrd.model.MemberVO">
+	    delete from tmember where id = #{id} and pw = #{pw}
+	</delete>
+	
+	<!-- 회원 정보 보기 -->
+	<select id = 'memberList' resultType="kr.smhrd.model.MemberVO">
+	    select * from tmember where id not in ('Admin')
+	</select>
+	
+	<!-- id 중복 체크 -->
+	<select id = 'idCheck' resultType="kr.smhrd.model.MemberVO">
+	    select * from tmember where id = #{id}
+	</select>
+</mapper>
